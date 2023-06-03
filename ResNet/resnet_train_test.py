@@ -37,6 +37,10 @@ def main():
     X = torch.randn(size=(1, 1, 224, 224))
     net.shape(X)
 
+    # 多GPU数据并行
+    # device = [torch.device('cuda:0'), torch.device('cuda:1')]
+    # net = nn.DataParallel(net, device_ids=devices)
+
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(net.parameters(), lr=lr, weight_decay=weight_decay)
     train_loss, test_loss, train_acc, test_acc = train_model(net, loss_fn, optimizer, epochs, device, train_dataloader,
