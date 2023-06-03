@@ -1,4 +1,5 @@
 import torch
+import torchvision
 from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
@@ -8,8 +9,14 @@ from ResNet import ResNet
 
 
 def main():
+    # 使用数据增广
     transform = transforms.Compose([
         transforms.Resize(224),
+        torchvision.transforms.RandomHorizontalFlip(),  # 上下翻转
+        torchvision.transforms.RandomVerticalFlip(),  # 左右翻转
+        torchvision.transforms.ColorJitter(
+            brightness=0.5, contrast=0.5, saturation=0.5, hue=0.5),  # 随机改变亮度，对比度，饱和度和色温
+
         transforms.ToTensor()
     ])
 
@@ -26,7 +33,10 @@ def main():
                                        download=True)
 
     test_data = datasets.FashionMNIST(root="../data/",
-                                      transform=transform,
+                                      transform=transforms.Compose([
+                                          transforms.Resize(224),
+                                          transforms.ToTensor()
+                                      ]),
                                       train=False,
                                       download=True)
 
@@ -38,7 +48,7 @@ def main():
     net.shape(X)
 
     # 多GPU数据并行
-    # device = [torch.device('cuda:0'), torch.device('cuda:1')]
+    # devices = [torch.device('cuda:0'), torch.device('cuda:1')]
     # net = nn.DataParallel(net, device_ids=devices)
 
     loss_fn = nn.CrossEntropyLoss()
