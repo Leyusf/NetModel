@@ -9,7 +9,10 @@ from ResNet import ResNet
 
 
 def main():
-    # 使用数据增广
+    # 使用RGB通道的均值和标准差，以标准化每个通道
+    normalize = torchvision.transforms.Normalize(
+        [0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+
     transform = transforms.Compose([
         transforms.Resize(224),
         torchvision.transforms.RandomHorizontalFlip(),  # 上下翻转
