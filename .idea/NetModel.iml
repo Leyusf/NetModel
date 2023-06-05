@@ -9,6 +9,9 @@
       <sourceFolder url="file://$MODULE_DIR$/GooLeNet" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ResNet" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DesnseNet" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CIFAR-10" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/FineTuning" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ImageNet-Dogs" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

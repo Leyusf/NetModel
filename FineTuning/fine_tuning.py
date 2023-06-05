@@ -1,12 +1,10 @@
 import os
 
 import torch
-
-import torch
 import torchvision
 from torch import nn
 from torch.utils.data import DataLoader
-from torchvision import datasets, transforms
+from torchvision.models import ResNet18_Weights
 
 from NModule.Ntraining import train_model, drawGraph
 
@@ -43,7 +41,7 @@ def main():
     train_dataloader = DataLoader(train_set, batch_size, shuffle=True, drop_last=True, num_workers=4)
     test_dataloader = DataLoader(test_set, batch_size, shuffle=True, drop_last=True, num_workers=4)
 
-    net = torchvision.models.resnet18(pretrained=True)
+    net = torchvision.models.resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
     net.fc = nn.Linear(net.fc.in_features, 2)
     nn.init.xavier_uniform_(net.fc.weight)
 

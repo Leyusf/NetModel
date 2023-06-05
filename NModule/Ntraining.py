@@ -72,8 +72,10 @@ def init_weights(m):
         nn.init.xavier_uniform_(m.weight)
 
 
-def train_model(net, loss_fn, optimizer, epochs, device, dataloader, test_dataloader, save_best=False, init=None):
-    if not init:
+def train_model(net, loss_fn, optimizer, epochs, device, dataloader, test_dataloader, save_best=False, init=None, scheduler=None):
+    if init is False:
+        pass
+    elif not init:
         net.apply(init_weights)
     else:
         net.apply(init)
@@ -126,6 +128,8 @@ def train_model(net, loss_fn, optimizer, epochs, device, dataloader, test_datalo
             acc = acc / num
             loss = loss / num
 
+        if scheduler:
+            scheduler.step()
         net.eval()
         test_acc_ep, test_ls = evaluate_model(net, loss_fn, device, test_dataloader)
 
