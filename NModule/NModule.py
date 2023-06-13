@@ -9,8 +9,8 @@ class NModule(nn.Module):
         super().__init__()
         self.net = None
 
-    def forward(self, images):
-        res = self.net(images)
+    def forward(self, data):
+        res = self.net(data)
         return res
 
     def shape(self, data):

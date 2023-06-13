@@ -9,18 +9,13 @@ from ResNet import ResNet
 
 
 def main():
-    # 使用RGB通道的均值和标准差，以标准化每个通道
-    normalize = torchvision.transforms.Normalize(
-        [0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-
     transform = transforms.Compose([
         transforms.Resize(224),
         torchvision.transforms.RandomHorizontalFlip(),  # 上下翻转
         torchvision.transforms.RandomVerticalFlip(),  # 左右翻转
         torchvision.transforms.ColorJitter(
             brightness=0.5, contrast=0.5, saturation=0.5, hue=0.5),  # 随机改变亮度，对比度，饱和度和色温
-
-        transforms.ToTensor()
+        transforms.ToTensor(),
     ])
 
     batch_size = 64

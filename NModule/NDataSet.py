@@ -1,6 +1,8 @@
 import torch
 from torch.utils.data import Dataset
 
+from NModule.NCV import read_dataset
+
 
 class NDataSet(Dataset):
     def __init__(self, input_data: torch.Tensor, output_data: torch.Tensor, reshape=None, transforms=None):
@@ -29,3 +31,20 @@ class NDataSet(Dataset):
             data = self.transforms(data)
 
         return data, target
+
+
+class ObjectDetectDataset(torch.utils.data.Dataset):
+    """一个用于目标检测数据集的自定义数据集"""
+
+    def __init__(self, data_dir, is_train=True, transforms=None):
+        super().__init__()
+        self.images, self.labels = read_dataset(data_dir, is_train)
+        self.transforms = transforms
+        print('read ' + str(len(self.images)) + (f' training examples' if
+                                                   is_train else f' validation examples'))
+
+    def __getitem__(self, idx):
+        return self.images[idx].float(), self.labels[idx]
+
+    def __len__(self):
+        return len(self.images)

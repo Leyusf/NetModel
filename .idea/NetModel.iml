@@ -12,6 +12,9 @@
       <sourceFolder url="file://$MODULE_DIR$/CIFAR-10" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/FineTuning" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ImageNet-Dogs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/LDA" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/RCNN" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SequenceModel" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

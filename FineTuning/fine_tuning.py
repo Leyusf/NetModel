@@ -33,8 +33,8 @@ def main():
 
     batch_size = 64
     epochs = 10
-    lr = 0.05
-    weight_decay = 0
+    lr = 1e-4
+    weight_decay = 1e-4
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -49,7 +49,7 @@ def main():
     # devices = [torch.device('cuda:0'), torch.device('cuda:1')]
     # net = nn.DataParallel(net, device_ids=devices)
 
-    loss_fn = nn.CrossEntropyLoss()
+    loss_fn = nn.CrossEntropyLoss(reduction="none")
     optimizer = torch.optim.SGD(net.parameters(), lr=lr, weight_decay=weight_decay)
     train_loss, test_loss, train_acc, test_acc = train_model(net, loss_fn, optimizer, epochs, device, train_dataloader,
                                                              test_dataloader, save_best=True)
