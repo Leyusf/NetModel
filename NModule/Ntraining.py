@@ -9,6 +9,8 @@ import torch
 from matplotlib import pyplot as plt
 from torch import nn
 
+from NModule.utils import Accumulator, Timer
+
 
 def read_csv_labels(file):
     """
@@ -61,36 +63,6 @@ def reorg_data(data_dir, valid_ratio):
     labels = read_csv_labels(os.path.join(data_dir, 'labels.csv'))
     reorg_train_valid(data_dir, labels, valid_ratio)
     reorg_test(data_dir)
-
-
-class Timer:
-    # author: Mu Li
-    """Record multiple running times."""
-
-    def __init__(self):
-        """Defined in :numref:`sec_minibatch_sgd`"""
-        self.times = []
-
-    def start(self):
-        """Start the timer."""
-        self.tik = time.time()
-
-    def stop(self):
-        """Stop the timer and record the time in a list."""
-        self.times.append(time.time() - self.tik)
-        return self.times[-1]
-
-    def avg(self):
-        """Return the average time."""
-        return sum(self.times) / len(self.times)
-
-    def sum(self):
-        """Return the sum of time."""
-        return sum(self.times)
-
-    def cumsum(self):
-        """Return the accumulated time."""
-        return np.array(self.times).cumsum().tolist()
 
 
 def accuracy(y_hat, y):
@@ -339,3 +311,70 @@ def train_seq(net, loss_fn, optimizer, epochs, train_loader, test_loader, device
             optimizer.step()
         print(f'epoch {epoch + 1}, train loss: {evaluate_model(net, loss_fn, device, train_loader)[1]:f},'
               f' test loss: {evaluate_model(net, loss_fn, device, test_loader)[1]:f}')
+
+
+def predict_rnn(prefix, num_preds, net, vocab, device):
+    """在prefix后面生成新字符"""
+    state = net.begin_state(batch_size=1, device=device)
+    outputs = [vocab[prefix[0]]]
+    get_input = lambda: torch.tensor([outputs[-1]], device=device).reshape((1, 1))
+    for y in prefix[1:]:  # 预热期
+        _, state = net(get_input(), state)
+        outputs.append(vocab[y])
+    for _ in range(num_preds):  # 预测num_preds步
+        y, state = net(get_input(), state)
+        outputs.append(int(y.argmax(dim=1).reshape(1)))
+    return ''.join([vocab.idx_to_token[i] for i in outputs])
+
+
+def grad_clipping(net, theta):  # @save
+    """裁剪梯度"""
+    params = [p for p in net.parameters() if p.requires_grad]
+    norm = torch.sqrt(sum(torch.sum((p.grad ** 2)) for p in params))
+    if norm > theta:
+        for param in params:
+            param.grad[:] *= theta / norm
+
+
+def train_epoch_rnn(net, train_iter, loss, updater, device, use_random_iter, theta=1):
+    state, timer = None, Timer()
+    metric = Accumulator(2)  # 训练损失之和,词元数量
+    for X, Y in train_iter:
+        if state is None or use_random_iter:
+            # 在第一次迭代或使用随机抽样时初始化state
+            state = net.begin_state(batch_size=X.shape[0], device=device)
+        else:
+            if isinstance(net, nn.Module) and not isinstance(state, tuple):
+                # state对于nn.GRU是个张量
+                state.detach_()
+            else:
+                # state对于nn.LSTM是个张量
+                for s in state:
+                    s.detach_()
+        y = Y.T.reshape(-1)
+        X, y = X.to(device), y.to(device)
+        y_hat, state = net(X, state)
+        l = loss(y_hat, y.long()).mean()
+
+        updater.zero_grad()
+        l.backward()
+        grad_clipping(net, theta)
+        updater.step()
+
+        metric.add(l * y.numel(), y.numel())
+    return math.exp(metric[0] / metric[1]), metric[1] / timer.stop()
+
+
+def train_rnn(net, train_iter, vocab, lr, num_epochs, device,
+              use_random_iter=False, theta=1):
+    loss = nn.CrossEntropyLoss()
+
+    updater = torch.optim.SGD(net.parameters(), lr)
+    predict = lambda prefix: predict_rnn(prefix, 50, net, vocab, device)
+    # 训练和预测
+    for epoch in range(num_epochs):
+        ppl, speed = train_epoch_rnn(
+            net, train_iter, loss, updater, device, use_random_iter, theta)
+        if (epoch + 1) % 10 == 0:
+            print(predict('time traveller'))
+    print(f'Perplexity {ppl:.1f}, {speed:.1f} token/sec on {str(device)}')
