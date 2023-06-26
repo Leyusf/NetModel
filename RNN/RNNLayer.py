@@ -27,10 +27,11 @@ class RNNLayer(nn.Module):
 
     def forward(self, inputs, H):
         all_states, last_state = self.x2h_layer(inputs, torch.unsqueeze(H[0], dim=0))
-
+        # 如果只有1层，直接输出
         if self.num_layers == 1:
             return all_states, last_state
 
+        # 如果是深度RNN则将计算得到的隐状态作为输入多次计算
         last_states = [last_state]
         for state in H[1:]:
             states = []
