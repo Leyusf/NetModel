@@ -1,4 +1,4 @@
-from NModule.textProcessing import Vocab, tokenize
+from NModule.textProcessing import Vocab
 
 
 class NGrams:

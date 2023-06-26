@@ -25,7 +25,7 @@ def tokenize(lines, token="word"):
         print("Unknown", token)
 
 
-class Vocab:  # @save
+class Vocab:
     """文本词表"""
 
     def __init__(self, tokens=None, min_freq=0, reserved_tokens=None):
@@ -84,7 +84,6 @@ def load_corpus(filename, max_tokens=-1, token="char"):
     lines = read_text_file(filename)
     tokens = tokenize(lines, token)
     vocab = Vocab(tokens)
-    # 因为时光机器数据集中的每个文本行不一定是一个句子或一个段落，
     # 所以将所有文本行展平到一个列表中
     corpus = [vocab[token] for line in tokens for token in line]
     if max_tokens > 0:

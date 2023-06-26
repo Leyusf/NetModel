@@ -354,7 +354,7 @@ def train_epoch_rnn(net, train_iter, loss, updater, device, use_random_iter, the
         y = Y.T.reshape(-1)
         X, y = X.to(device), y.to(device)
         y_hat, state = net(X, state)
-        l = loss(y_hat, y.long()).mean()
+        l = loss(y_hat, y.long())
 
         updater.zero_grad()
         l.backward()
@@ -372,9 +372,23 @@ def train_rnn(net, train_iter, vocab, lr, num_epochs, device,
     updater = torch.optim.SGD(net.parameters(), lr)
     predict = lambda prefix: predict_rnn(prefix, 50, net, vocab, device)
     # 训练和预测
+    graph = []
     for epoch in range(num_epochs):
         ppl, speed = train_epoch_rnn(
             net, train_iter, loss, updater, device, use_random_iter, theta)
         if (epoch + 1) % 10 == 0:
             print(predict('time traveller'))
+            graph.append((epoch+1, ppl))
+    drawPerplexity(graph)
     print(f'Perplexity {ppl:.1f}, {speed:.1f} token/sec on {str(device)}')
+
+
+def drawPerplexity(data):
+    epochs = [d[0] for d in data]
+    ppl = [d[1] for d in data]
+    plt.plot(epochs, ppl, label='perplexity')
+    plt.title('Perplexity-Epoch')
+    plt.xlabel('epoch')
+    plt.ylabel('Perplexity')
+    plt.legend()
+    plt.show()
