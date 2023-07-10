@@ -354,6 +354,7 @@ def train_epoch_rnn(net, train_iter, loss, updater, device, use_random_iter, the
         y = Y.T.reshape(-1)
         X, y = X.to(device), y.to(device)
         y_hat, state = net(X, state)
+
         l = loss(y_hat, y.long())
 
         updater.zero_grad()

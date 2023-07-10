@@ -4,9 +4,9 @@ from torch import nn
 
 class RNNLayer(nn.Module):
 
-    def __init__(self, vocab_size, hidden_size, num_layers=1):
+    def __init__(self, vocab_size, hidden_size, num_layers=1, bidirectional=None):
         super().__init__()
-        self.bidirectional = None
+        self.bidirectional = bidirectional
         self.num_layers = num_layers
         self.vocab_size = vocab_size
         self.hidden_size = hidden_size
@@ -25,7 +25,7 @@ class RNNLayer(nn.Module):
         states = torch.cat(states, dim=0)
         return states, state
 
-    def forward(self, inputs, H):
+    def one_direction(self, inputs, H):
         all_states, last_state = self.x2h_layer(inputs, torch.unsqueeze(H[0], dim=0))
         # 如果只有1层，直接输出
         if self.num_layers == 1:
@@ -45,3 +45,20 @@ class RNNLayer(nn.Module):
             all_states = torch.cat(states, dim=0)
         last_states = torch.cat(last_states, dim=0)
         return all_states, last_states
+
+    def forward(self, inputs, H):
+        # 双向设计
+        if self.bidirectional:
+            _H = H[:int(H.shape[0]/2)]
+        else:
+            _H = H
+        states, last_states = self.one_direction(inputs, _H)
+        if self.bidirectional:
+            H_ = H[int(H.shape[0]/2):]
+            inputs_ = inputs.flip(0)
+            states_, last_states_ = self.one_direction(inputs_, H_)
+            states = torch.cat((states, states_), dim=2)
+            last_states = torch.cat((last_states, last_states_), dim=0)
+        return states, last_states
+
+

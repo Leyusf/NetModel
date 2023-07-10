@@ -2,6 +2,8 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
+from LSTMLayer import LSTMLayer
+
 
 class RNNModel(nn.Module):
     """循环神经网络模型"""
@@ -19,8 +21,11 @@ class RNNModel(nn.Module):
             self.linear = nn.Linear(self.num_hiddens * 2, self.vocab_size)
 
     def forward(self, inputs, state):
+        print(inputs.shape)
         X = F.one_hot(inputs.T.long(), self.vocab_size)
         X = X.to(torch.float32)
+
+        print(state[0].shape)
         Y, state = self.rnn(X, state)
         # 将每个时间步上的输出都作为线性层的输入
         # 全连接层首先将Y的形状改为(时间步数*批量大小,隐藏单元数)
@@ -29,7 +34,7 @@ class RNNModel(nn.Module):
         return output, state
 
     def begin_state(self, device, batch_size=1):
-        if not isinstance(self.rnn, nn.LSTM):
+        if not isinstance(self.rnn, nn.LSTM) and not isinstance(self.rnn, LSTMLayer):
             # nn.GRU以张量作为隐状态
             return torch.zeros((self.num_directions * self.rnn.num_layers,
                                 batch_size, self.num_hiddens),
