@@ -4,7 +4,7 @@ import torch
 import torch.utils.data
 from matplotlib import pyplot as plt
 
-from textProcessing import Vocab
+from NModule.textProcessing import Vocab
 
 
 def read_data_nmt(filename):
@@ -83,3 +83,4 @@ def load_data_nmt(filename, batch_size, num_steps, num_examples=600):
     dataset = torch.utils.data.TensorDataset(*data_arrays)
     data_iter = torch.utils.data.DataLoader(dataset, batch_size, shuffle=True)
     return data_iter, src_vocab, tgt_vocab
+

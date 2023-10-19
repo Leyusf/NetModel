@@ -17,6 +17,7 @@
       <sourceFolder url="file://$MODULE_DIR$/SequenceModel" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/NGrams" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RNN" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Seq2Seq" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

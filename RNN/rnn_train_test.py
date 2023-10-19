@@ -7,7 +7,7 @@ from RNN import RNNModel
 from RNNLayer import RNNLayer
 
 batch_size, num_steps = 32, 50
-train_iter, vocab = load_data(batch_size, num_steps, "..//data//text//timemachine.txt")
+train_iter, vocab = load_data(batch_size, num_steps, "..\\data\\text\\timemachine.txt")
 num_hiddens = 256
 # rnn_layer = RNNLayer(len(vocab), num_hiddens)
 rnn_layer = nn.RNN(len(vocab), num_hiddens)
