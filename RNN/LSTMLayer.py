@@ -17,9 +17,6 @@ class LSTMLayer(nn.Module):
         self.output_gate = nn.Linear(self.vocab_size + self.hidden_size, self.hidden_size)
 
     def forward(self, inputs, state):
-        print(inputs.shape)
-        print(state[0].shape)
-        exit()
         H, C = state
         states = []
         for X in inputs:

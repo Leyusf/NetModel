@@ -413,6 +413,7 @@ def train_seq2seq(net, train_iter, vocab, lr, num_epochs, device, theta=1):
             bos = torch.tensor([vocab['<bos>']] * y.shape[0], device=device).reshape(-1, 1)
             dec_input = torch.cat([bos, y[:, :-1]], dim=1)  # 强制教学
             y_hat, _ = net(x, dec_input, x_valid_len)
+
             l = loss(y_hat, y, y_valid_len)
             l.sum().backward()
             grad_clipping(net, theta)

@@ -6,11 +6,11 @@ from NModule.NModule import Encoder, Decoder
 
 class Seq2SeqEncoder(Encoder):
     # 可以是双向的
-    def __init__(self, vocab_size, embed_size, num_hiddens, num_layers, dropout=0, **kwargs):
+    def __init__(self, vocab_size, embed_size, num_hiddens, num_layers, dropout=0, rnn=nn.GRU, **kwargs):
         super(Seq2SeqEncoder, self).__init__(**kwargs)
         # 嵌入层
         self.embedding = nn.Embedding(vocab_size, embed_size)
-        self.rnn = nn.GRU(embed_size, num_hiddens, num_layers, dropout=dropout)
+        self.rnn = rnn(embed_size, num_hiddens, num_layers, dropout=dropout)
 
     def forward(self, X, *args):
         # 输出'X'的形状：(batch_size,num_steps,embed_size)
@@ -25,11 +25,12 @@ class Seq2SeqEncoder(Encoder):
 
 class Seq2SeqDecoder(Decoder):
     # 只关心最后一个hidden state， 所以可以处理变长的句子
-    def __init__(self, vocab_size, embed_size, num_hiddens, num_layers, dropout=0, **kwargs):
+    def __init__(self, vocab_size, embed_size, num_hiddens, num_layers, dropout=0, rnn=nn.GRU, **kwargs):
         super(Seq2SeqDecoder, self).__init__(**kwargs)
         self.embedding = nn.Embedding(vocab_size, embed_size)
-        self.rnn = nn.GRU(embed_size + num_hiddens, num_hiddens, num_layers, dropout=dropout)
+        self.rnn = rnn(embed_size + num_hiddens, num_hiddens, num_layers, dropout=dropout)
         self.dense = nn.Linear(num_hiddens, vocab_size)
+        print("RNN Layer:", self.rnn)
 
     def init_state(self, enc_output, *args):
         return enc_output[1]
@@ -37,7 +38,10 @@ class Seq2SeqDecoder(Decoder):
     def forward(self, X, state):
         X = self.embedding(X).permute(1, 0, 2)
         # 把encoder的最后的状态重复为一个(时间步, 1, 1)的矩阵
-        context = state[-1].repeat(X.shape[0], 1, 1)
+        if isinstance(self.rnn, nn.LSTM):
+            context = state[0][-1].repeat(X.shape[0], 1, 1)
+        else:
+            context = state[-1].repeat(X.shape[0], 1, 1)
         X_and_context = torch.cat((X, context), 2)
         states, state = self.rnn(X_and_context, state)
         # 把batch_size放到前面
