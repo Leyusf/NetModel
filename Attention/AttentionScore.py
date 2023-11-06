@@ -61,6 +61,7 @@ class ScaledDotProductAttention(nn.Module):
         d = q.shape[-1]
         # 设置transpose_b=True为了交换keys的最后两个维度
         scores = torch.bmm(q, k.transpose(1, 2)) / math.sqrt(d)
+
         self.attention_weights = masked_softmax(scores, valid_lens)
         return torch.bmm(self.dropout(self.attention_weights), v)
 
