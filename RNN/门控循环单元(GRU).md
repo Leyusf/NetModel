@@ -8,14 +8,7 @@ GRU由两个门组成，一个门是重置门(Reset)，一个门是更新门(Upd
 
 其公式为：
 
-$$
-\begin{split}\begin{aligned}
-\mathbf{R}_t = \sigma(\mathbf{X}_t \mathbf{W}_{xr} + \mathbf{H}_{t-1} \mathbf{W}_{hr} + \mathbf{b}_r),\\
-\mathbf{Z}_t = \sigma(\mathbf{X}_t \mathbf{W}_{xz} + \mathbf{H}_{t-1} \mathbf{W}_{hz} + \mathbf{b}_z),\\
-\tilde{\mathbf{H}}_t = \tanh(\mathbf{X}_t \mathbf{W}_{xh} + \left(\mathbf{R}_t \odot \mathbf{H}_{t-1}\right) \mathbf{W}_{hh} + \mathbf{b}_h),\\
-\mathbf{H}_t = \mathbf{Z}_t \odot \mathbf{H}_{t-1}  + (1 - \mathbf{Z}_t) \odot \tilde{\mathbf{H}}_t.
-\end{aligned}\end{split}
-$$
+![[Pasted image 20230626180222.png]](../images/1700294228994.png)
 
 根据这个公式可知，当 $R_t$ 接近1， $Z_t$ 接近于0时，等价于RNN。
 在pytorch中，调用API：
@@ -23,7 +16,9 @@ $$
 gru_layer = nn.GRU(len(vocab), num_hiddens)
 ```
 其性能如下：
+
 ![[Pasted image 20230626181539.png]](../images/20230626181539.png)
+
 其代码实现如下：
 ```
 class GRULayer(nn.Module):  
