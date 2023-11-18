@@ -69,9 +69,10 @@ $p_n$ 是预测中所有n-gram的精度。
 * 例如，序列 A B C D E F 和预测序列 A B B C D, 有 $p_1=4.5, p_2=3/4, p_3=1/3, p_4=0$ 。
 
 * BLEU定义
-$$exp(min(0,1 - {len_{label} \over {len_pred}})) {\prod p_n^
-{1/2^n}}$$
-其中$len_{pred}$ 惩罚过短的预测， $p_n^{1/2^n}$ 长匹配有高权重。
+
+$$exp(min(0,1 - {len_{label} \over {len_pred}})) {\prod p_n^{1/2^n}}$$
+
+其中 $len_{pred}$ 惩罚过短的预测， $p_n^{1/2^n}$ 长匹配有高权重。
 
 ## 屏蔽无效的信息
 ```

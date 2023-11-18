@@ -1,37 +1,47 @@
 ## 贝叶斯模型
 语言模型的原理是贝叶斯概率统计。
 贝叶斯公式为：
+
 $$
 P({x_1}, {x_2}, {x_3},...,{x_T})=\prod_{t=1}^TP({x_t}|{x_1},...,{x_t-1})
 $$
+
 例如，一个文本 "Deep learning is fun"出现的概率是:
+
 $$
 P(deep,learning,is,fun)=P(deep)P(learning|deep)P(is|learning,deep)P(fun|is,learning,deep)
 $$
+
 这里的概率都是由**语料库**([[文本预处理]])的统计得到的。
+
 $$
 \hat{P}(learning|deep)={n(learning, deep)\over n(deep)}
 $$
-其中$n(x)$和$n(x,x')$分别是单个单词和连续单词对的出现**次数**。
+
+其中 $n(x)$ 和 $n(x,x')$ 分别是单个单词和连续单词对的出现**次数**。
 但是，对于一些不常见的单词组合，要想找到足够的出现次数来获得准确的估计可能都不容易。 而对于三个或者更多的单词组合，情况会变得更糟。 许多合理的三个单词组合可能是存在的，但是在数据集中却找不到。 除非我们提供某种解决方案，来将这些单词组合指定为非零计数， 否则将无法在语言模型中使用它们。 如果数据集很小，或者单词非常罕见，那么这类单词出现一次的机会可能都找不到。
-一种常见的策略是执行某种形式的 *拉普拉斯平滑(Laplace smoothing)*， 具体方法是在所有计数中添加一个小常量。 用$n$表示训练集中的单词总数，用$m$表示唯一单词的数量。
+一种常见的策略是执行某种形式的 *拉普拉斯平滑(Laplace smoothing)*， 具体方法是在所有计数中添加一个小常量。 用 $n$ 表示训练集中的单词总数，用 $m$ 表示唯一单词的数量。
 例如：
+
 $$
 \hat{P}(X)={n(x)+\epsilon_1/m\over n+\epsilon_1}
 $$
+
 $$
 \hat{P}(x'|x)={n(x,x')+\epsilon_2 \hat{P}(x')\over n(x)+\epsilon_2}
 $$
+
 $$
 \hat{P}(x''|x',x)={n(x,x',x'') + \epsilon_3\hat{P}(x'') \over n(x,x'')+\epsilon_e}
 $$
 
-其中，$\epsilon_1$,$\epsilon_2$和$\epsilon_3$是超参数。 以$\epsilon_1$为例：当$\epsilon_1=0$时，不应用平滑； 当$\epsilon_1$接近正无穷大时，$\hat{P}(x)$接近均匀概率分布$1/m$。
+其中， $\epsilon_1$ , $\epsilon_2$ 和 $\epsilon_3$ 是超参数。 以 $\epsilon_1$ 为例：当 $\epsilon_1=0$ 时，不应用平滑； 当 $\epsilon_1$ 接近正无穷大时， $\hat{P}(x)$ 接近均匀概率分布 $1/m$ 。
 
 ## n-gram
 
 序列的分布上满足一阶马尔可夫性质。阶数越高，依赖关系越长。常用的为一元语法(unigram)、二元语法(bigram)与三元语法(trigram)。
 例如:
+
 $$
 P(x_1, x_2, x_3)=P(x_1)P(x_2|x_1)P(x_3|x_2)P(x_4|x_3)
 $$
