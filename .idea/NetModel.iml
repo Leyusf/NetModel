@@ -7,7 +7,6 @@
       <sourceFolder url="file://$MODULE_DIR$/VGG" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/NiN" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ResNet" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/DesnseNet" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CIFAR-10" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/FineTuning" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ImageNet-Dogs" isTestSource="false" />
@@ -18,6 +17,7 @@
       <sourceFolder url="file://$MODULE_DIR$/RNN" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Seq2Seq" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Attention" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/DenseNet" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GoogLeNet" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
