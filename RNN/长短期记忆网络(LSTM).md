@@ -43,7 +43,7 @@ $$
 只要输出门接近1，我们就能够有效地将所有记忆信息传递给预测部分， 而对于输出门接近0，我们只保留记忆元内的所有信息，而不需要更新隐状态。
 
 ## 模型结构：
-![[Pasted image 20230630182938.png]]
+![[Pasted image 20230630182938.png]](../images/20230630182938.png)
 
 
 pytorch的API是：
@@ -51,7 +51,7 @@ pytorch的API是：
 lstm_layer = nn.LSTM(len(vocab), num_hiddens)
 ```
 其性能如下：
-![[Pasted image 20230630183859.png]]
+![[Pasted image 20230630183859.png]](../images/20230630183859.png)
 
 代码实现：
 ```

@@ -1,11 +1,12 @@
 [[残差神经网络（ResNet）|ResNet]]极大地改变了如何参数化深层网络中函数的观点。 稠密连接网络在某种程度上是ResNet的逻辑扩展。
 
-![[Pasted image 20231118140108.png]]
+![[Pasted image 20231118140108.png]](../images/20231118140108.png)
 ResNet（左）与 DenseNet（右）在跨层连接上的主要区别：使用相加和使用连结。
 ResNet和DenseNet的关键区别在于，DenseNet输出是**连接**（用图中的[,]表示）而不是如ResNet的简单相加。
 
 ## 稠密连接
-![[Pasted image 20231118140207.png|410]]
+
+![[Pasted image 20231118140207.png|410]](../images/20231118140207.png)
 
 稠密网络主要由2部分构成：**稠密块**（dense block）和 **过渡层**（transition layer）。 前者定义如何连接输入和输出，而后者则控制通道数量，使其不会太复杂。
 

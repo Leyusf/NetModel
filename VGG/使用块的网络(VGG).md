@@ -19,7 +19,7 @@ class VGGBlock:
 ```
 
 ## VGG网络
-![[Pasted image 20231118134810.png|575]]
+![[Pasted image 20231118134810.png|575]](../images/20231118134810.png)
 
 VGG网络由几个VGG块组成。
 

@@ -2,7 +2,7 @@
 
 门控单元可以更加关注于序列中重要的节点。
 其结构如下
-![[Pasted image 20230626180222.png]]
+![[Pasted image 20230626180222.png]](../images/20230626180222.png)
 GRU由两个门组成，一个门是重置门(Reset)，一个门是更新门(Update)，分别记为R和Z。
 重置门用于**忘记**上一个隐状态，更新门表示当前输入对隐状态由多少的更新量。同时这里还有一个候选隐状态$\hat{H}$。
 
@@ -21,7 +21,7 @@ $$
 gru_layer = nn.GRU(len(vocab), num_hiddens)
 ```
 其性能如下：
-![[Pasted image 20230626181539.png]]
+![[Pasted image 20230626181539.png]](../images/20230626181539.png)
 其代码实现如下：
 ```
 class GRULayer(nn.Module):  
