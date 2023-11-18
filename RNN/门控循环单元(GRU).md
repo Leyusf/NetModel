@@ -7,6 +7,7 @@ GRU由两个门组成，一个门是重置门(Reset)，一个门是更新门(Upd
 重置门用于**忘记**上一个隐状态，更新门表示当前输入对隐状态由多少的更新量。同时这里还有一个候选隐状态$\hat{H}$。
 
 其公式为：
+
 $$
 \begin{split}\begin{aligned}
 \mathbf{R}_t = \sigma(\mathbf{X}_t \mathbf{W}_{xr} + \mathbf{H}_{t-1} \mathbf{W}_{hr} + \mathbf{b}_r),\\
@@ -15,6 +16,7 @@ $$
 \mathbf{H}_t = \mathbf{Z}_t \odot \mathbf{H}_{t-1}  + (1 - \mathbf{Z}_t) \odot \tilde{\mathbf{H}}_t.
 \end{aligned}\end{split}
 $$
+
 根据这个公式可知，当$R_t$接近1，$Z_t$接近于0时，等价于RNN。
 在pytorch中，调用API：
 ```
