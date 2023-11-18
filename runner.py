@@ -6,7 +6,7 @@ sys.path.extend(['E:\\DeepLearn\\NetModel', 'E:\\DeepLearn\\NetModel\\SequenceMo
                  'E:\\DeepLearn\\NetModel\\RNN', 'E:\\DeepLearn\\NetModel\\CIFAR-10',
                  'E:\\DeepLearn\\NetModel\\FineTuning', 'E:\\DeepLearn\\NetModel\\ImageNet-Dogs',
                  'E:\\DeepLearn\\NetModel\\NiN', 'E:\\DeepLearn\\NetModel\\GoogLeNet', 'E:\\DeepLearn\\NetModel\\ResNet',
-                 'E:\\DeepLearn\\NetModel\\DesnseNet', 'E:\\DeepLearn\\NetModel\\AlexNet',
+                 'E:\\DeepLearn\\NetModel\\DenseNet', 'E:\\DeepLearn\\NetModel\\AlexNet',
                  'E:\\DeepLearn\\NetModel\\LeNet', 'E:\\DeepLearn\\NetModel\\VGG', 'E:\\DeepLearn\\NetModel\\Seq2Seq',
                  'E:\\DeepLearn\\NetModel\\Attention', 'E:/DeepLearn/NetModel'])
 
