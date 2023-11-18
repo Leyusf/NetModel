@@ -2,11 +2,11 @@ GoogLeNet吸收了[[网格中的网络（NiN）|NiN]]中串联网络的思想，
 
 ## Inception块
 在GoogLeNet中，基本的卷积块被称为**Inception块（Inception block）**。
-![[Pasted image 20231118135310.png|600]]
+![[Pasted image 20231118135310.png|600]](../images/20231118135310.png)
 
 Inception块由四条并行路径组成。 前三条路径使用窗口大小为1×1、3×3和5×5的卷积层，从不同空间大小中提取信息。 中间的两条路径在输入上执行1×1卷积，以减少通道数，从而降低模型的复杂性。 第四条路径使用3×3最大汇聚层，然后使用1×1卷积层来改变通道数。 这四条路径都使用合适的填充来使输入与输出的高和宽一致，最后我们将每条线路的输出在通道维度上连结，并构成Inception块的输出。在Inception块中，通常调整的超参数是每层输出通道数。
 
 ## GoogLeNet模型
 
 GoogLeNet一共使用9个Inception块和全局平均汇聚层的堆叠来生成其估计值。Inception块之间的最大汇聚层可降低维度。 第一个模块类似于[[AlexNet]]和[[LeNet]]，Inception块的组合从[[使用块的网络(VGG)|VGG]]继承，全局平均汇聚层避免了在最后使用全连接层。
-![[Pasted image 20231118135432.png|223]]
+![[Pasted image 20231118135432.png|223]](../images/20231118135432.png)

@@ -8,7 +8,7 @@
 - [GoogLeNet](GoogLeNet/含并行连结的网络（GoogLeNet）.md)
 - [ResNet](ResNet/残差神经网络（ResNet）.md)
 - [DenseNet](DenseNet/稠密连接网络（DenseNet）.md)
-- [微调](FineTuning/微调（Fine Tuning）.md)
+- [微调] (FineTuning/微调（Fine Tuning）.md)
 
 ## 循环神经网络：
 - [n-grams与数据集](NGrams/n-grams与数据集.md)
@@ -23,10 +23,10 @@
 - [束搜索](RNN/束搜索.md)
 
 ## 注意力机制：
-- [注意力机制](Attention/注意力机制(attention mechanism).md)
+- [注意力机制] (Attention/注意力机制(attention mechanism).md)
 - [注意力分数](Attention/注意力分数.md)
 - [注意力汇聚](Attention/注意力汇聚.md)
-- [使用注意力机制的Seq2Seq](Attention/使用注意力机制的Seq2Seq(Bahdanau 注意力).md)
+- [使用注意力机制的Seq2Seq] (Attention/使用注意力机制的Seq2Seq(Bahdanau 注意力).md)
 - [多头注意力机制](Attention/多头注意力机制.md)
 - [自注意力和位置编码](Attention/自注意力和位置编码.md)
 - [Transformer](Attention/Transformer.md)
