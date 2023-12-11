@@ -19,6 +19,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Attention" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DenseNet" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GoogLeNet" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/GAN" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
