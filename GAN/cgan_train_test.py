@@ -64,7 +64,7 @@ def train_gan(net, loss_fn, g_optim, d_optim, epochs, train_loader, batch_size, 
 def main():
     batch_size = 512
     epochs = 50
-    lr = 0.01
+    lr = 0.001
     weight_decay = 0.01
     noise_size = 100
     pic_size = 28

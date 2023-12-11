@@ -51,10 +51,10 @@ class Discriminator(nn.Module):
         self.net = nn.Sequential(
             nn.Conv2d(channels+1, 64, kernel_size=(3, 3), stride=(2, 2)),
             nn.LeakyReLU(),
-            nn.Dropout2d(),
+            # nn.Dropout2d(),
             nn.Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2)),
             nn.LeakyReLU(),
-            nn.Dropout2d(),
+            # nn.Dropout2d(),
             nn.BatchNorm2d(128),
             nn.Flatten(),
             nn.Linear(128*6*6, class_dim+1),
