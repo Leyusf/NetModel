@@ -48,6 +48,8 @@ class Discriminator(nn.Module):
             nn.ReLU(True)
         )
 
+        # 不用dropout效果更好
+        # 不采用任何防止过拟合的手段，效果最好
         self.net = nn.Sequential(
             nn.Conv2d(channels+1, 64, kernel_size=(3, 3), stride=(2, 2)),
             nn.LeakyReLU(),

@@ -10,9 +10,10 @@ from CGAN import CGAN
 def generate_and_save_images(model, test_input):
     predictions = np.squeeze(model(test_input, torch.tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=torch.int64).cuda())
                              .cpu().numpy())
+    # 't-shirt', 'trouser', 'pullover', 'dress', 'coat', 'sandal', 'shirt', 'sneaker', 'bag', 'ankle boot'
     for i in range(10):
         plt.subplot(2, 5, i + 1)
-        plt.imshow((predictions[i] + 1) / 2, cmap="gray")
+        plt.imshow((predictions[i] + 1) / 2)
         plt.axis('off')
     plt.show()
 
@@ -62,10 +63,10 @@ def train_gan(net, loss_fn, g_optim, d_optim, epochs, train_loader, batch_size, 
 
 
 def main():
-    batch_size = 512
+    batch_size = 1024
     epochs = 50
-    lr = 0.001
-    weight_decay = 0.01
+    lr = 0.0001
+    weight_decay = 0
     noise_size = 100
     pic_size = 28
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -75,12 +76,11 @@ def main():
         transforms.ToTensor(),
         transforms.Normalize(0.5, 0.5)
     ])
-    train_data = datasets.MNIST(root="../data/",
+    train_data = datasets.FashionMNIST(root="../data/",
                                 transform=transform,
                                 train=True,
                                 download=True)
     train_dataloader = DataLoader(train_data, batch_size, shuffle=True, drop_last=True, num_workers=4)
-
     net = CGAN(noise_size, 10, pic_size, 1)
     net = net.to(device)
 
