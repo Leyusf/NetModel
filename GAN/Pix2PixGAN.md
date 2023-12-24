@@ -37,8 +37,7 @@ G网络损失函数（生成器）
 
 增加了L1的loss之后，最终的损失函数如下图所示：
 
-$$
 
+$
 G^*=\arg\min\limits_G\max\limits_D\mathcal{L}_{cGAN}(G,D)+\lambda\mathcal{L}_{L1}(G)
-
-$$
+$
