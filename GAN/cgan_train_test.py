@@ -88,8 +88,9 @@ def main():
     d_optim = torch.optim.Adam(net.discriminator.parameters(), lr=lr, weight_decay=weight_decay)
 
     loss_fn = torch.nn.CrossEntropyLoss()
-    gen_loss, dis_loss = train_gan(net, loss_fn, g_optim, d_optim, epochs, train_dataloader, batch_size, noise_size,
-                                   device, generate_and_save_images)
+
+    gen_loss, dis_loss = train_gan(net, loss_fn, g_optim, d_optim, epochs, train_dataloader,
+                                   batch_size, noise_size, device, generate_and_save_images)
 
     plt.plot(gen_loss, label='G_loss')
     plt.plot(dis_loss, label='D_loss')
